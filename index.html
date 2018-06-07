@@ -1,20 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-<meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<title></title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+  <title>mirobit: web bluetooth API example</title>
 </head>
 
 <body>
-<form name="js">
-<input type="button" value="接続" onclick="connect();"/> 
-<input type="button" value="切断" onclick="disconnect();" /> 
-<input type="text" name="x" value="" />
-<input type="text" name="y" value="" />
-<input type="text" name="z" value="" />
-</form>
-
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        Special Thanks
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Inspired by @yokmama</h5>
+        <p class="card-text">To connect BLE devise via Web Bluetooth API is a little bit time consuming.
+          The following @yokmama's article helped me a lot. Thank you very much.</p>
+        <p>
+          <a href="https://qiita.com/yokmama/items/5522fabfb5b9623278e2" class="" target="_blank">
+            https://qiita.com/yokmama/items/5522fabfb5b9623278e2
+          </a>
+        </p>
+      </div>
+    </div><!-- //card -->
+    <div class="card mt-5">
+      <div class="card-header">
+        Accelerator
+      </div>
+      <div class="card-body">
+        <form name="js">
+        <input type="button" value="CONNECT" onclick="connect();"/>
+        <input type="button" value="DISCONNECT" onclick="disconnect();" />
+        X:<input type="text" name="x" value="" />
+        Y:<input type="text" name="y" value="" />
+        Z:<input type="text" name="z" value="" />
+        </form>
+      </div>
+    </div><!-- //card mt-5-->
+  </div>
 <script>
 var accelerometer_device;
 var accelerometer_characteristic;
@@ -50,12 +78,12 @@ function connect() {
     alert("BLE接続が完了しました。");
     characteristic = chara;
     characteristic.startNotifications();
-    characteristic.addEventListener('characteristicvaluechanged',onAccelerometerValueChanged);  
-  })  
+    characteristic.addEventListener('characteristicvaluechanged',onAccelerometerValueChanged);
+  })
   .catch(error => {
-    alert("BLE接続に失敗しました。もう一度試してみてください");
+    alert("Faild to establish BLE connection. Please try again.");
     console.log(error);
-  });    
+  });
 }
 
 function onAccelerometerValueChanged(event) {
@@ -71,15 +99,17 @@ function onAccelerometerValueChanged(event) {
     console.log('z:' + AcceleratorZ);
     document.js.z.value = AcceleratorZ;
 
-} 
+}
 
 function disconnect() {
   if (!accelerometer_device || !accelerometer_device.gatt.connected) return ;
   accelerometer_device.gatt.disconnect();
-  alert("BLE接続を切断しました。")
+  alert("BLE connection established ;)")
 }
 
-</script>    
+</script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 </body>
 </html>
-
